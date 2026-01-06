@@ -48,17 +48,17 @@ The dataset consists of four core tables:
 
 Stores details of credit cards issued to customers.
 _______________________________________________________
-|                                                      |
+
 |Column Name	| Data Type   |	Description              |
-|                                                      |
+                                                      
 | Card_Number	| varchar(50) |	Unique card identifier   |
-|                                                      | 
+
 | Card_Family	| varchar(30)	| Silver, Gold, Platinum   |
-|                                                      |
+
 | Credit_Limit|	int	Credit  | limit assigned           |
-|                                                      |
+
 | Cust_ID	    | varchar(20)	| Customer ID              |
-_______________________________________________________|
+_______________________________________________________
 
 👤 Customer_base
 
