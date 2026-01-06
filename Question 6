@@ -1,0 +1,37 @@
+Business Scenario
+The bank wants to identify its most valuable and safest customer: the one who spends the most but has never been involved in any fraudulent transaction.
+
+Your Task
+Using all relevant tables:
+
+Consider only non-fraudulent transactions
+For each customer, calculate the total transaction value of their non-fraud transactions
+Exclude any customer who has at least one fraudulent transaction
+Return the customer with the highest total non-fraud spend
+
+with
+  fraud as (
+    select
+      c.CUST_ID as cust_id
+    from
+      transaction_base t
+      join fraud_base f on t.TRANSACTION_ID = f.TRANSACTION_ID
+      join card_base c on t.CREDIT_CARD_ID = c.CARD_NUMBER
+    where
+      f.FRAUD_FLAG = 1
+  )
+select
+  c.CUST_ID,
+  sum(t.TRANSACTION_VALUE) as non_fraud_spend
+from
+  card_base c
+  left join fraud f on c.CUST_ID = f.cust_id
+  left join transaction_base t on c.CARD_NUMBER = t.CREDIT_CARD_ID
+where
+  f.cust_id is null
+group by
+  c.CUST_ID
+order by
+  non_fraud_spend desc
+limit
+  1;
