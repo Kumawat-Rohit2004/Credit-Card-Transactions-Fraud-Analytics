@@ -1,0 +1,28 @@
+Business Scenario
+Risk management wants to understand whether fraud is more common among low-limit or high-limit customers. A starting point is to analyze the range of credit limits among customers who have had at least one fraudulent transaction.
+
+Your Task
+Using the fraud, transaction, and card tables:
+
+Identify all cards that have at least one fraudulent transaction
+From those cards, find the minimum and maximum credit limit
+Return the overall min_credit_limit and max_credit_limit among cards involved in fraud.
+
+
+with
+  fraud as (
+    select
+      f.TRANSACTION_ID as t_id,
+      t.CREDIT_CARD_ID as card_id
+    from
+      fraud_base f
+      inner join transaction_base t on f.TRANSACTION_ID = t.TRANSACTION_ID
+    where
+      f.FRAUD_FLAG = 1
+  )
+select
+  min(c.CREDIT_LIMIT) as MIN_LIMIT,
+  max(c.CREDIT_LIMIT) as MAX_LIMIT
+from
+  fraud f
+  join card_base c on f.card_id = c.CARD_NUMBER
