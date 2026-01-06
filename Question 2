@@ -1,0 +1,33 @@
+Business Scenario
+The bank wants to launch a new Premium credit card product with higher rewards and benefits. To control risk and maximize profitability, they want to target customers who already have high credit limits and show strong engagement.
+
+Your Task
+Define potential Premium card candidates as customers whose credit limit is in the top 10% of all credit limits
+
+Using the card and customer data:
+
+Calculate the 90th percentile of Credit_Limit
+Identify all customers whose credit limit is greater than or equal to this threshold
+Return their Cust_ID, Age, Customer_Segment, and Customer_Vintage_Group
+You may assume that a customer with at least one card at or above this threshold is eligible for a Premium card.
+
+### SQL Code
+
+with
+  perc_90 as (
+    select
+      percentile_cont(0.9) within group (
+        order by
+          CREDIT_LIMIT
+      ) as p90
+    from
+      card_base
+  )
+select
+  c.*
+from
+  customer_base as c
+  left join card_base cb on c.CUST_ID = cb.CUST_ID
+  cross join perc_90
+where
+  cb.CREDIT_LIMIT > perc_90.p90
