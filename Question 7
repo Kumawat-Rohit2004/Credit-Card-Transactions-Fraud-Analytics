@@ -1,0 +1,19 @@
+Business Scenario
+Some customers may have been onboarded but have never used their card. These inactive customers represent potential revenue if the bank can activate them through campaigns or incentives.
+
+Your Task
+Using the customer, card, and transaction tables:
+
+Identify customers who have never performed a single transaction on any of their cards
+Return the list of such customer IDs. These are customers in Customer_base with zero matching transactions in Transaction_base.
+
+
+
+SELECT
+  cust.cust_id
+FROM
+  customer_base cust
+  LEFT JOIN card_base c ON cust.cust_id = c.cust_id
+  LEFT JOIN transaction_base t ON c.card_number = t.credit_card_id
+WHERE
+  t.transaction_id IS NULL;
