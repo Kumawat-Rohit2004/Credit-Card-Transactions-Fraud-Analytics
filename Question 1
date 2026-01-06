@@ -1,0 +1,23 @@
+Business Scenario
+Relationship managers want to identify high-value customers based on their total card spend. These customers may be eligible for special offers, cross-sell opportunities, or higher credit limits.
+
+Your Task
+Using the credit card transaction data, calculate each customer's total transaction value across all their cards. Then find how many customers have a cumulative transaction value greater than 49,000.
+
+Treat a customer as high-spend if the sum of all their transaction values across all cards exceeds 49,000.
+
+
+select
+  count(*) as HIGH_SPEND_CUSTOMER
+from
+  (
+    SELECT
+      c.CUST_ID
+    FROM
+      card_base c
+      LEFT JOIN transaction_base t ON t.CREDIT_CARD_ID = c.CARD_NUMBER
+    GROUP BY
+      c.CUST_ID
+    HAVING
+      SUM(t.TRANSACTION_VALUE) > 49000
+  ) s;
