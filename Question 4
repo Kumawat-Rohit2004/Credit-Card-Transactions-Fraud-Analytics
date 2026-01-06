@@ -1,0 +1,33 @@
+Business Scenario
+The bank wants to understand whether certain card families are more prone to fraud among specific age groups. For example, are younger customers with certain card types more frequently involved in fraud?
+
+Your Task
+Using all four tables:
+
+Identify customers who have at least one fraudulent transaction
+Group them by Card_Family (card type)
+For each card family, compute the average age of customers involved in fraud
+Return one row per card family with its average age (rounded to 2 decimals).
+
+with
+  fraud as (
+    select
+      f.TRANSACTION_ID as t_id,
+      t.CREDIT_CARD_ID as card_id
+    from
+      fraud_base f
+      inner join transaction_base t on f.TRANSACTION_ID = t.TRANSACTION_ID
+    where
+      f.FRAUD_FLAG = 1
+  )
+select
+  c.CARD_FAMILY,
+  round(avg(cust.AGE), 2) as avg_age_fraud_customers
+from
+  card_base c
+  join fraud f on c.CARD_NUMBER = f.card_id
+  join customer_base cust on c.CUST_ID = cust.CUST_ID
+group by
+  c.CARD_FAMILY
+order by
+  c.CARD_FAMILY
