@@ -1,162 +1,106 @@
-💳 Credit Card Transactions & Fraud Analytics (SQL Case Study)
+Credit Card Transactions & Fraud Analytics
 
-📖 Overview
+Business Context
 
-This project is a SQL-based analytics case study focused on understanding credit card usage, customer behavior, credit limits, and fraud patterns for a leading bank.
+A leading bank issues multiple types of credit cards to its customers. These customers perform thousands of transactions every month across different merchant categories and channels. The bank also tracks which transactions are later identified as fraudulent so that it can strengthen its fraud detection systems and customer risk models.
 
-The analysis simulates a real-world scenario handled by an Analytics & Risk Team, where transactional data is used to strengthen fraud detection systems and improve customer risk profiling.
+As part of the bank’s Analytics & Risk team, you are given a dataset that captures:
 
-🏦 Business Context
+--> The list of credit cards issued to customers and their credit limits
 
-A bank issues multiple types of credit cards (Silver, Gold, Platinum, etc.) to customers across different segments. Customers perform thousands of transactions monthly through various channels such as Online, POS, and ATM.
+--> Core customer attributes such as age and customer segment
 
-Some transactions are later flagged as fraudulent, and the bank wants to analyze:
+--> All card transactions performed over a certain period
 
-Spending behavior
+--> Which transactions were flagged as fraudulent
 
-Credit utilization
+Your job is to explore this data using SQL and answer key business questions related to:
 
-Fraud concentration
+--> High-spend customers
 
-Card family performance
+--> Credit limit analysis
 
-🎯 Objectives
+--> Fraud patterns and risk
 
-Using SQL, this project answers business-driven questions such as:
+--> Customer segments and behavior
 
-Who are the high-spend customers?
+--> Card family performance and usage
 
-Which card families have the highest and lowest credit limits?
+Available Tables
 
-Which customers or segments are more prone to fraud?
+The dataset consists of four core tables:
 
-Which months experience higher fraud activity?
-
-Which card types perform best with minimal fraud?
-
-🗂️ Dataset Description
 1. Card_base
++--------------+------------------+
+| COLUMN_NAME  | DATA_TYPE        |
++--------------+------------------+
+| Card_Number  | varchar(50)      |
+| Card_Family  | varchar(30)      | -- e.g. Silver, Gold, Platinum
+| Credit_Limit | int              |
+| Cust_ID      | varchar(20)      |
++--------------+------------------+
 
-Stores information about credit cards issued to customers.
-
-Column Name	Description
-Card_Number	Unique credit card number
-Card_Family	Silver, Gold, Platinum, etc.
-Credit_Limit	Credit limit assigned
-Cust_ID	Customer identifier
 2. Customer_base
++------------------------+------------------+
+| COLUMN_NAME            | DATA_TYPE        |
++------------------------+------------------+
+| Cust_ID                | varchar(20)      |
+| Age                    | int              |
+| Customer_Segment       | varchar(30)      | -- e.g. Mass, Affluent, HNI
+| Customer_Vintage_Group | varchar(20)      | -- e.g. <1 yr, 1-3 yrs, 3+ yrs
++------------------------+------------------+
 
-Contains customer demographic and segmentation details.
+3. Fraud_base
++----------------+------------------+
+| COLUMN_NAME    | DATA_TYPE        |
++----------------+------------------+
+| Transaction_ID | varchar(20)      |
+| Fraud_Flag     | int              | -- 1 = fraud, 0 = not fraud (if present)
++----------------+------------------+
 
-Column Name	Description
-Cust_ID	Unique customer ID
-Age	Customer age
-Customer_Segment	Mass / Affluent / HNI
-Customer_Vintage_Group	<1 yr, 1–3 yrs, 3+ yrs
-3. Transaction_base
+4. Transaction_base
++--------------------+------------------+
+| COLUMN_NAME        | DATA_TYPE        |
++--------------------+------------------+
+| Transaction_ID     | varchar(20)      |
+| Transaction_Date   | date             |
+| Credit_Card_ID     | varchar(50)      | -- links to Card_Number
+| Transaction_Value  | decimal          |
+| Transaction_Segment| varchar(20)      | -- e.g. Online, POS, ATM
++--------------------+------------------+
 
-Captures all credit card transactions.
+Typical relationships between the tables:
 
-Column Name	Description
-Transaction_ID	Unique transaction ID
-Transaction_Date	Date of transaction
-Credit_Card_ID	Card used
-Transaction_Value	Transaction amount
-Transaction_Segment	Online / POS / ATM
-4. Fraud_base
+--> Card_base.Cust_ID → Customer_base.Cust_ID
 
-Indicates fraudulent transactions.
+--> Transaction_base.Credit_Card_ID → Card_base.Card_Number
 
-Column Name	Description
-Transaction_ID	Linked transaction
-Fraud_Flag	1 = Fraud, 0 = Not Fraud
-🔗 Table Relationships
-Customer_base.Cust_ID
-        ↓
-Card_base.Cust_ID
-        ↓
-Transaction_base.Credit_Card_ID
-        ↓
-Fraud_base.Transaction_ID
+--> Fraud_base.Transaction_ID → Transaction_base.Transaction_ID
 
-📊 Key Analysis Areas
+Case Study Objectives
 
-✔ High-spender identification
-✔ Credit limit analysis by card family
-✔ Fraud rate by customer segment
-✔ Monthly fraud trends
-✔ Card performance without fraud
+Using these four tables, you will answer business-driven questions such as:
 
-🧠 SQL Concepts Used
+--> How many customers are high spenders?
 
-INNER JOIN / LEFT JOIN
+--> Which card families get the highest and lowest credit limits?
 
-GROUP BY & HAVING
+--> Which customers or segments are most associated with fraud?
 
-CASE WHEN logic
+--> Which month sees the highest fraud activity?
 
-Date functions (MONTH, YEAR)
+--> Which card types perform best without any fraud involvement?
 
-Aggregations (SUM, COUNT, AVG)
+What You Will Learn
 
-Fraud rate calculations
+--> Joining customer, card, transaction, and fraud tables
 
-📌 Example Business Questions
+--> Aggregating transactions at customer and card-family level
 
-Which customers spend more than their peer average?
+--> Analyzing fraud patterns and risk
 
-Which card family has the highest fraud percentage?
+--> Using date functions, grouping, and conditional logic
 
-Do newer customers show higher fraud risk?
+--> Translating business questions into efficient SQL queries
 
-Are online transactions more fraud-prone?
-
-Which card family has zero fraud exposure?
-
-🛠️ Tools & Technologies
-
-SQL (MySQL / PostgreSQL / SQL Server compatible)
-
-Relational Data Modeling
-
-Fraud Analytics
-
-Risk & Customer Segmentation Analysis
-
-🚀 Outcomes & Insights
-
-This analysis enables the bank to:
-
-Detect high-risk customer segments
-
-Optimize credit limits
-
-Strengthen fraud monitoring strategies
-
-Improve card portfolio performance
-
-📁 Repository Structure (Suggested)
-📦 credit-card-fraud-analytics
- ┣ 📂 sql_queries
- ┃ ┣ high_spend_customers.sql
- ┃ ┣ fraud_analysis.sql
- ┃ ┣ card_family_performance.sql
- ┃ ┗ monthly_fraud_trends.sql
- ┣ 📄 README.md
-
-👤 Author
-
-Rohit Kumawat
-SQL | Data Analytics | Risk & Fraud Analysis
-
-⭐ Why This Project Matters
-
-This case study reflects real banking analytics problems frequently asked in:
-
-SQL interviews
-
-Risk & fraud analytics roles
-
-Data analyst assessments
-
-Banking & fintech case rounds
+Use SQL to help the bank understand its customers, control fraud risk, and make smarter credit decisions.
