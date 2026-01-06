@@ -1,0 +1,20 @@
+Business Scenario
+Product managers want to understand how credit limits are distributed across different card families (Silver, Gold, Platinum, etc.). This helps ensure that product positioning and risk appetite are aligned.
+
+Your Task
+Using the Card_base table, for each Card_Family:
+
+Find the minimum credit limit
+Find the maximum credit limit
+Return one row per card family with its lowest and highest credit limit.
+
+select
+  card_family,
+  min(credit_limit) as min_credit_limit,
+  max(credit_limit) as max_credit_limit
+from
+  card_base
+group by
+  card_family
+order by
+  card_family
