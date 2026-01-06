@@ -1,0 +1,47 @@
+Business Scenario
+Marketing wants to understand which age groups contribute the most in terms of transaction value. They are particularly interested in the following age brackets:
+
+0–20 years
+20–30 years
+30–40 years
+40–50 years
+50+ years
+
+Your Task
+Using customer, card, and transaction data:
+
+Assign each customer to one of the above age brackets based on their Age
+For each age bracket, calculate the total transaction value performed by customers in that bracket
+Return one row per age bracket with the total transaction value.
+
+with
+  cust as (
+    select
+      *,
+      (
+        case
+          when age >= 0
+          and age < 20 then '0-20'
+          when age >= 20
+          and age < 30 then '20-30'
+          when age >= 30
+          and age < 40 then '30-40'
+          when age >= 40
+          and age < 50 then '40-50'
+          when age >= 50 then '50+'
+        end
+      ) as age_bracket
+    from
+      customer_base
+  )
+select
+  cust.age_bracket,
+  sum(t.transaction_value) as total_transaction_value
+from
+  cust
+  join card_base c on cust.cust_id = c.cust_id
+  left join transaction_base t on c.card_number = t.credit_card_id
+group by
+  cust.age_bracket
+order by
+  cust.age_bracket
