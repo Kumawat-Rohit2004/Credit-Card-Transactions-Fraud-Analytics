@@ -43,6 +43,7 @@ Using SQL, this project answers key business questions such as:
 
 The dataset consists of four core tables:
 
+
 🪪 Card_base
 
 Stores details of credit cards issued to customers.
@@ -52,6 +53,8 @@ Card_Number	varchar(50)	Unique card identifier
 Card_Family	varchar(30)	Silver, Gold, Platinum
 Credit_Limit	int	Credit limit assigned
 Cust_ID	varchar(20)	Customer ID
+
+
 👤 Customer_base
 
 Contains demographic and segmentation information.
@@ -61,6 +64,8 @@ Cust_ID	varchar(20)	Unique customer identifier
 Age	int	Customer age
 Customer_Segment	varchar(30)	Mass / Affluent / HNI
 Customer_Vintage_Group	varchar(20)	<1 yr, 1–3 yrs, 3+ yrs
+
+
 💳 Transaction_base
 
 Records all credit card transactions.
@@ -71,6 +76,8 @@ Transaction_Date	date	Date of transaction
 Credit_Card_ID	varchar(50)	Linked card number
 Transaction_Value	decimal	Transaction amount
 Transaction_Segment	varchar(20)	Online / POS / ATM
+
+
 🚨 Fraud_base
 
 Indicates fraudulent transactions.
@@ -78,6 +85,8 @@ Indicates fraudulent transactions.
 Column Name	Data Type	Description
 Transaction_ID	varchar(20)	Linked transaction
 Fraud_Flag	int	1 = Fraud, 0 = Not Fraud
+
+
 🔗 Table Relationships
 
 Card_base.Cust_ID → Customer_base.Cust_ID
@@ -87,10 +96,15 @@ Transaction_base.Credit_Card_ID → Card_base.Card_Number
 Fraud_base.Transaction_ID → Transaction_base.Transaction_ID
 
 📊 Key Analysis Areas
+
 ✔ High-spender identification
+
 ✔ Credit limit comparison by card family
+
 ✔ Fraud analysis by customer segment
+
 ✔ Monthly fraud trend analysis
+
 ✔ Fraud-free card family performance
 
 🧠 SQL Concepts Used
