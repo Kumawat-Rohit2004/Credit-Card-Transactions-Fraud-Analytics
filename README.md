@@ -87,7 +87,6 @@ Transaction_base.Credit_Card_ID → Card_base.Card_Number
 Fraud_base.Transaction_ID → Transaction_base.Transaction_ID
 
 📊 Key Analysis Areas
-
 ✔ High-spender identification
 ✔ Credit limit comparison by card family
 ✔ Fraud analysis by customer segment
