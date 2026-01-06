@@ -1,0 +1,24 @@
+Business Scenario
+Fraud analysts want to know in which month the bank saw the most fraud activity. This can help them correlate issues with campaigns, system releases, or external events.
+
+Your Task
+Using the fraud and transaction tables:
+
+Consider only transactions flagged as fraud
+Group them by calendar month
+Find the month that has the highest count of fraudulent transactions
+Return the fraud month (e.g. 2023-05-01 as month start) and the fraud count.
+
+
+select
+  DATE_TRUNC('month', t.transaction_date)::date as fraud_month,
+  count(f.FRAUD_FLAG) as fraud_txn_count
+from
+  fraud_base f
+  join transaction_base t on f.TRANSACTION_ID = t.TRANSACTION_ID
+group by
+  fraud_month
+order by
+  fraud_txn_count desc
+limit
+  1
