@@ -1,5 +1,5 @@
 Credit Card Transactions & Fraud Analytics
-
+  
 Business Context
 
 A leading bank issues multiple types of credit cards to its customers. These customers perform thousands of transactions every month across different merchant categories and channels. The bank also tracks which transactions are later identified as fraudulent so that it can strengthen its fraud detection systems and customer risk models.
