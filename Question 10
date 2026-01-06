@@ -1,0 +1,42 @@
+Business Scenario
+The product team wants to know which card family delivers the strongest performance in terms of volume of transactions and total transaction value, while having no fraud on those transactions.
+
+
+
+Your Task
+Using the transactions, cards, and fraud tables:
+
+Consider only non-fraudulent transactions (transactions with no fraud record, or Fraud_Flag = 0)
+Group by Card_Family
+For each card family, compute:
+Total number of non-fraud transactions
+Total non-fraud transaction value
+Identify the card family that has the highest number of non-fraud transactions and, in case of a tie, the highest total non-fraud transaction value.
+
+
+with
+  fraud as (
+    select
+      cb.card_family,
+      t.transaction_value,
+      COALESCE(f.Fraud_Flag, 0) AS fraud_flag
+    from
+      transaction_base t
+      join card_base cb on cb.card_number = t.credit_card_id
+      left join fraud_base f on t.transaction_id = f.transaction_id
+  )
+select
+  card_family,
+  count(*) as non_fraud_txn_count,
+  sum(transaction_value) as non_fraud_total_value
+from
+  fraud
+where
+  fraud_flag = 0
+group by
+  card_family
+order by
+  non_fraud_txn_count desc,
+  non_fraud_total_value desc
+limit
+  1
