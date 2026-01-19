@@ -1,39 +1,23 @@
 ## 💳 Credit Card Transactions & Fraud Analytics
 
-###  🔹 Business Context
+### 📌 Project Overview
+This project focuses on identifying fraudulent patterns and abnormal customer behaviors within credit card transaction data. By leveraging advanced SQL techniques and multi-table relational database structures, I performed an end-to-end analysis to detect high-risk transactions, analyze credit utilization, and provide data-driven insights for financial risk assessment.
 
-A leading bank issues multiple types of credit cards to its customers. These customers perform thousands of transactions every month across different merchant categories and channels. The bank also tracks which transactions are later identified as fraudulent so that it can strengthen its fraud detection systems and customer risk models.
+### 🎯 Key Objectives
+Fraud Detection: Analyze historical transaction data to identify patterns indicative of fraudulent activity.<br>
+Behavioral Analysis: Segment customers based on spending habits and credit limit utilization to assess risk.<br>
+Performance Insights: Evaluate how fraud is distributed across different card families and customer demographics.<br>
+Business Impact: Provide actionable findings to reduce financial losses and improve the accuracy of credit decisions.
 
-#### As part of the bank’s Analytics & Risk team, you are given a dataset that captures:
-  - The list of credit cards issued to customers and their credit limit.<br>
-  - Core customer attributes such as age and customer segment.<br>
-  - All card transactions performed over a certain period.<br>
-  - Which transactions were flagged as fraudulent.
+### 🛠️ Technical Stack
+Database: PostgreSQL / MySQL <br>
+Language: SQL (Complex Joins, CTEs, Window Functions, Aggregate Functions) <br>
+Concepts: Data Normalization, Schema Design, Fraud Modeling, Risk Assessment.
 
-#### Your job is to explore this data using SQL and answer key business questions related to:
+### 📂 Database Schema & Analysis
+The project built a relational structure by joining four primary datasets:
 
-  - High-spend customers.<br>
-  - Credit limit analysis.<br>
-  - Fraud patterns and risk.<br>
-  - Customer segments and behavior.<br>
-  - Card family performance and usage.
-
-### Available Tables
-The dataset consists of four core tables.
-
-#### 1. Card_base
-
-| COLUMN_NAME  | DATA_TYPE        |
-|--------------|------------------|
-| Card_Number  | varchar(50)      |
-| Card_Family  | varchar(30)      | -- e.g. Silver, Gold, Platinum
-| Credit_Limit | int              |
-| Cust_ID      | varchar(20)      |
-
-
-#### 2. Customer_base
-
-
+#### 1.Customer: Demographics and account details.
 | COLUMN_NAME            | DATA_TYPE        |
 |------------------------|------------------|
 | Cust_ID                | varchar(20)      |
@@ -41,21 +25,15 @@ The dataset consists of four core tables.
 | Customer_Segment       | varchar(30)      | -- e.g. Mass, Affluent, HNI
 | Customer_Vintage_Group | varchar(20)      | -- e.g. <1 yr, 1-3 yrs, 3| yrs
 
+#### 2.Card: Information on card types and families.
+| COLUMN_NAME  | DATA_TYPE        |
+|--------------|------------------|
+| Card_Number  | varchar(50)      |
+| Card_Family  | varchar(30)      | -- e.g. Silver, Gold, Platinum
+| Credit_Limit | int              |
+| Cust_ID      | varchar(20)      |
 
-
-#### 3. Fraud_base
-
-
-| COLUMN_NAME    | DATA_TYPE        |
-|----------------|------------------|
-| Transaction_ID | varchar(20)      |
-| Fraud_Flag     | int              | -- 1 = fraud, 0 = not fraud (if present)
-
-
-
-#### 4. Transaction_base
-
-
+#### 3.Transaction: Real-time spending data (amount, time, location).
 | COLUMN_NAME        | DATA_TYPE        |
 |--------------------|------------------|
 | Transaction_ID     | varchar(20)      |
@@ -64,29 +42,29 @@ The dataset consists of four core tables.
 | Transaction_Value  | decimal          |
 | Transaction_Segment| varchar(20)      | -- e.g. Online, POS, ATM
 
+#### 4.Fraud: Flagged fraudulent instances.
+| COLUMN_NAME    | DATA_TYPE        |
+|----------------|------------------|
+| Transaction_ID | varchar(20)      |
+| Fraud_Flag     | int              | -- 1 = fraud, 0 = not fraud (if present)
+
+### 🚀 Analysis Workflow
+Data Integration: Executed multi-table SQL joins across customer and transaction datasets to enable comprehensive analysis.<br>
+Risk Assessment: Analyzed credit limit utilization ratios to identify customers at high risk of default or suspicious activity.<br>
+Trend Identification: Evaluated the frequency and volume of fraud across various customer segments.<br>
+Actionable Insights: Correlated spending spikes with fraud flags to help institutions refine their detection algorithms.
+
+### 📊 Key Findings
+Identified specific "Card Families" that experienced higher fraud distribution.<br>
+Highlighted segments where high credit limit utilization strongly correlated with abnormal behavior.<br>
+Provided data-backed recommendations to reduce financial losses through targeted fraud monitoring.
 
 
-### Typical relationships between the tables:
-
-  --> Card_base.Cust_ID → Customer_base.Cust_ID.<br>
-   --> Transaction_base.Credit_Card_ID → Card_base.Card_Number.<br>
-   --> Fraud_base.Transaction_ID → Transaction_base.Transaction_ID.
 
 
-### Case Study Objectives
-Using these four tables, you will answer business-driven questions such as:
 
-  --> How many customers are high spenders?<br>
-  --> Which card families get the highest and lowest credit limits?<br>
-  --> Which customers or segments are most associated with fraud?<br>
-  --> Which month sees the highest fraud activity?<br>
-  --> Which card types perform best without any fraud involvement?
 
-### What You Will Learn
-  --> Joining customer, card, transaction, and fraud tables.<br>
-  --> Aggregating transactions at customer and card-family level.<br>
-  --> Analyzing fraud patterns and risk.<br>
-  --> Using date functions, grouping, and conditional logic.<br>
-  --> Translating business questions into efficient SQL queries.
 
-Use SQL to help the bank understand its customers, control fraud risk, and make smarter credit decisions.
+
+
+
